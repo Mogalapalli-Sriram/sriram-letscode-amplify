@@ -46,5 +46,11 @@
       "type": "cicd",
       "lastPushTimeStamp": "2021-08-29T09:26:43.764Z"
     }
+  },
+  "storage": {
+    "songsPlayer123": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }
