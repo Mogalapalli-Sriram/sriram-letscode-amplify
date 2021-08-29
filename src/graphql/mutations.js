@@ -1,48 +1,54 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createSecretData = /* GraphQL */ `
-  mutation CreateSecretData(
-    $input: CreateSecretDataInput!
-    $condition: ModelSecretDataConditionInput
+export const createSong = /* GraphQL */ `
+  mutation CreateSong(
+    $input: CreateSongInput!
+    $condition: ModelSongConditionInput
   ) {
-    createSecretData(input: $input, condition: $condition) {
+    createSong(input: $input, condition: $condition) {
       id
       name
       description
+      filePath
+      likes
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const updateSecretData = /* GraphQL */ `
-  mutation UpdateSecretData(
-    $input: UpdateSecretDataInput!
-    $condition: ModelSecretDataConditionInput
+export const updateSong = /* GraphQL */ `
+  mutation UpdateSong(
+    $input: UpdateSongInput!
+    $condition: ModelSongConditionInput
   ) {
-    updateSecretData(input: $input, condition: $condition) {
+    updateSong(input: $input, condition: $condition) {
       id
       name
       description
+      filePath
+      likes
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const deleteSecretData = /* GraphQL */ `
-  mutation DeleteSecretData(
-    $input: DeleteSecretDataInput!
-    $condition: ModelSecretDataConditionInput
+export const deleteSong = /* GraphQL */ `
+  mutation DeleteSong(
+    $input: DeleteSongInput!
+    $condition: ModelSongConditionInput
   ) {
-    deleteSecretData(input: $input, condition: $condition) {
+    deleteSong(input: $input, condition: $condition) {
       id
       name
       description
+      filePath
+      likes
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;

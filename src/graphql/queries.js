@@ -1,32 +1,36 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getSecretData = /* GraphQL */ `
-  query GetSecretData($id: ID!) {
-    getSecretData(id: $id) {
+export const getSong = /* GraphQL */ `
+  query GetSong($id: ID!) {
+    getSong(id: $id) {
       id
       name
       description
+      filePath
+      likes
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const listSecretData = /* GraphQL */ `
-  query ListSecretData(
-    $filter: ModelSecretDataFilterInput
+export const listSongs = /* GraphQL */ `
+  query ListSongs(
+    $filter: ModelSongFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listSecretData(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listSongs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
         description
+        filePath
+        likes
+        owner
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }

@@ -1,39 +1,45 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateSecretData = /* GraphQL */ `
-  subscription OnCreateSecretData($owner: String!) {
-    onCreateSecretData(owner: $owner) {
+export const onCreateSong = /* GraphQL */ `
+  subscription OnCreateSong {
+    onCreateSong {
       id
       name
       description
+      filePath
+      likes
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const onUpdateSecretData = /* GraphQL */ `
-  subscription OnUpdateSecretData($owner: String!) {
-    onUpdateSecretData(owner: $owner) {
+export const onUpdateSong = /* GraphQL */ `
+  subscription OnUpdateSong {
+    onUpdateSong {
       id
       name
       description
+      filePath
+      likes
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const onDeleteSecretData = /* GraphQL */ `
-  subscription OnDeleteSecretData($owner: String!) {
-    onDeleteSecretData(owner: $owner) {
+export const onDeleteSong = /* GraphQL */ `
+  subscription OnDeleteSong {
+    onDeleteSong {
       id
       name
       description
+      filePath
+      likes
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
