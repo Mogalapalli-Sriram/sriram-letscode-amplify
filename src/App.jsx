@@ -4,12 +4,15 @@ import Amplify , {API , graphqlOperation, Storage} from 'aws-amplify';
 import awsconfig from './aws-exports';
 import {AmplifySignOut, withAuthenticator} from '@aws-amplify/ui-react';
 import {listSongs} from './graphql/queries';
-import {updateSong} from './graphql/mutations';
-import {Paper , IconButton} from '@material-ui/core';
+import {updateSong, createSong} from './graphql/mutations';
+import {Paper , IconButton, TextField} from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
+import AddIcon from '@material-ui/icons/Add';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import PublishIcon from '@material-ui/icons/Publish';
 import ReactPlayer from 'react-player';
+import { v4 as uuidv4 } from 'uuid';
 Amplify.configure(awsconfig);
 
 function App() {
@@ -17,6 +20,7 @@ function App() {
   const [songs, setSongs] = useState([]);
   const [songPlaying, setSongPlaying] = useState("");
   const [audioUrl, setAudioUrl] = useState("");
+  const [showAddSong, setShowAddSong] = useState(false);
   useEffect(() => {
     fetchsongs();
     console.log("Hi I am useEffect, which gets executed on loading the web page.")
@@ -24,6 +28,7 @@ function App() {
   const fetchsongs = async () => {
     try {
       const songsData = await API.graphql(graphqlOperation(listSongs));
+      console.log(songsData);
       const songsList = songsData.data.listSongs.items;
       console.log('songs list',songsList);
       setSongs(songsList);
@@ -103,6 +108,7 @@ function App() {
                       <ReactPlayer 
                       url={audioUrl}
                       controls
+                      playing
                       height = "50px"
                       onPause = {() => toggleIcon(idx)}
                       />
@@ -114,9 +120,52 @@ function App() {
             )})
 
           }
+          {
+            showAddSong ? (<AddSong 
+               onUpload = {() => {
+                setShowAddSong(false);
+                fetchsongs();
+               }} />
+              ) : <IconButton onClick={() => setShowAddSong(true)}> <AddIcon /></IconButton>
+          }
         </div>
     </div>
   );
 }
 
 export default withAuthenticator(App);
+
+
+
+const AddSong = ({onUpload}) => {
+  const [songData, setSongData] = useState({});
+  const [audioMp3, setAudioMp3] = useState();
+  const uploadSong = async () => {
+    console.log(songData);
+    const {name, description,owner} = songData
+    const {key} = await Storage.put(`${uuidv4()}.mp3`, audioMp3, {contentType: 'audio/mp3'});
+    const createASong = {
+      id: uuidv4(),
+      name,
+      description,
+      owner,
+      filePath: key,
+      likes: 0
+
+    }
+   await API.graphql(graphqlOperation(createSong, {input: createASong}));
+    onUpload();
+    
+  }
+
+  return(
+    <div>
+    <TextField  label = "Name" variant = "outlined" value = {songData.name} onChange = {(e) => setSongData({...songData, name: e.target.value})}/>
+    <TextField  label = "Owner" variant = "outlined" value  = {songData.owner} onChange = {(e) => setSongData({...songData, owner: e.target.value})}/>
+    <TextField  label = "Description" variant = "outlined" value = {songData.description} onChange = {(e) => setSongData({...songData, description: e.target.value})}/>
+    <input type = "file" accept = "audio/mp3" onChange = {(e) => setAudioMp3(e.target.files[0])}/>
+    <IconButton onClick={uploadSong}> <PublishIcon /></IconButton>
+    </div>
+    
+  );
+}
